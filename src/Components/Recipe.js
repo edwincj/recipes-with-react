@@ -4,12 +4,18 @@ import { RecipeContext } from "../App";
 
 const Recipe = (props) => {
   const { id, name, cookingTime, servings, instructions, ingredients } = props;
-  const { deleteRecipeHandler } = useContext(RecipeContext);
+  const { deleteRecipeHandler, selectRecipehandler } =
+    useContext(RecipeContext);
   return (
     <div className="recipe">
       <div className="recipe__header">
         <h3 className="recipe__title">{name}</h3>
-        <button className="btn btn--primary mr-1">Edit</button>
+        <button
+          className="btn btn--primary mr-1"
+          onClick={() => selectRecipehandler(id)}
+        >
+          Edit
+        </button>
         <button
           className="btn btn--danger"
           onClick={() => deleteRecipeHandler(id)}
