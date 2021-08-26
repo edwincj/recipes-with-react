@@ -26,22 +26,25 @@ function App() {
   const addRecipeHandler = () => {
     const newRecipe = {
       id: uuidv4(),
-      name: "new",
-      cookingTime: "0:00",
+      name: "",
+      cookingTime: "",
       servings: 0,
-      instructions: "New instr",
+      instructions: "",
       ingredients: [
         {
           id: uuidv4(),
-          name: "new",
-          amount: "0 pounds",
+          name: "",
+          amount: "",
         },
       ],
     };
+    setSelectedRecipeId(newRecipe.id);
     setRecipes([...recipes, newRecipe]);
   };
 
   const deleteRecipeHandler = (id) => {
+    if (selectedRecipeId !== null && selectedRecipeId === id)
+      setSelectedRecipeId(undefined);
     setRecipes(recipes.filter((recipe) => recipe.id !== id));
   };
 
@@ -49,10 +52,18 @@ function App() {
     setSelectedRecipeId(id);
   };
 
+  const recipeChangeHandler = (id, recipe) => {
+    const newRecipe = [...recipes];
+    const index = newRecipe.findIndex((r) => r.id === id);
+    newRecipe[index] = recipe;
+    setRecipes(newRecipe);
+  };
+
   const contextValue = {
     addRecipeHandler,
     deleteRecipeHandler,
     selectRecipehandler,
+    recipeChangeHandler,
   };
 
   return (
